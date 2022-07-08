@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user POSTs password data
 
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.params.id);
 
   if (
     !req.body.password ||
