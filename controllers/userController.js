@@ -7,6 +7,15 @@ const jwt = require("jsonwebtoken");
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user POSTs password data
 
+  console.log(req.user.id);
+  console.log(req.params.id);
+
+  if (req.user.id !== req.params.id) {
+    return next(
+      new AppError("You are not logged in! Please log in to get access.", 401)
+    );
+  }
+
   const user = await User.findById(req.params.id);
 
   if (
@@ -54,6 +63,11 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.getUser = catchAsync(async (req, res, next) => {
+  if (req.user.id !== req.params.id) {
+    return next(
+      new AppError("You are not logged in! Please log in to get access.", 401)
+    );
+  }
   let query = User.findById(req.params.id);
 
   const doc = await query;
@@ -72,6 +86,11 @@ exports.getUser = catchAsync(async (req, res, next) => {
 
 // Do NOT update passwords with this!
 exports.deleteUser = catchAsync(async (req, res, next) => {
+  if (req.user.id !== req.params.id) {
+    return next(
+      new AppError("You are not logged in! Please log in to get access.", 401)
+    );
+  }
   const doc = await User.findByIdAndDelete(req.params.id);
 
   if (!doc) {
