@@ -8,6 +8,6 @@ Please set two environment variables before proceeding with the the verification
 
   2. jwt  ---> This will be automatically set when a new user registers or logins or logs out.
 
-Protected Routes will only work if user is logged in.
+Protected Routes will work only if user is logged in.
 If user is logged in, cookies will have a jwt token set and parent collection will have header authorization set to bearer token for the logged in user.
 All the routes will inherit auth from parent.
